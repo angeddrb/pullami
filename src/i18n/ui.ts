@@ -1,6 +1,7 @@
 // UI strings keyed by locale. Product content lives in src/data/products.ts.
 // Edit copy here directly — this is the file you touch to tweak labels.
 
+// Mantener en sync con astro.config.mjs → i18n.locales / defaultLocale.
 export const locales = ['es', 'en'] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'es';
@@ -93,9 +94,3 @@ export const months = {
   es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
   en: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
 } as const;
-
-/** Build a localized URL. ES lives at root, EN under /en. */
-export function localizedPath(lang: Locale, path: string): string {
-  const clean = path.startsWith('/') ? path : `/${path}`;
-  return lang === defaultLocale ? clean : `/en${clean}`;
-}

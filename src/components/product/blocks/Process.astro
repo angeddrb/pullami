@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 ---
 {variant === 'band' ? (
   <section class="bg-band py-20 text-white md:py-28">
-    <div class="mx-auto max-w-3xl px-8 text-center">
+    <div class="mx-auto max-w-3xl px-gutter text-center">
       <h2 class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl" data-reveal>
         {t('product.process')}
       </h2>
@@ -22,7 +22,7 @@ const t = useTranslations(lang);
     </div>
   </section>
 ) : (
-  <section class="mx-auto grid max-w-7xl gap-10 px-8 py-16 md:grid-cols-[1fr_2fr] md:py-24">
+  <section class="mx-auto grid max-w-7xl gap-10 px-gutter py-16 md:grid-cols-[1fr_2fr] md:py-24">
     <h2 class="title-rule text-2xl font-normal tracking-wide md:text-3xl" data-reveal>{t('product.process')}</h2>
     <div class="space-y-8">
       {items.map((it) => (

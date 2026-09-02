@@ -1,7 +1,8 @@
 ---
-import { useTranslations, localizedPath, type Locale } from "../../i18n/ui";
-import { products } from "../../data/products";
-import Media from "../Media.astro";
+import { useTranslations, type Locale } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/routing';
+import { products } from '../../data/products';
+import Media from '../Media.astro';
 interface Props {
   lang: Locale;
 }
@@ -11,7 +12,7 @@ const t = useTranslations(lang);
 
 <section
   id="productos"
-  class="mx-auto max-w-7xl scroll-mt-20 px-8 py-20 text-center md:py-28"
+  class="mx-auto max-w-7xl scroll-mt-20 px-gutter py-20 text-center md:py-28"
 >
   <svg
     width="24"

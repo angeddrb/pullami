@@ -1,11 +1,12 @@
 ---
 import type { Locale } from '../../../i18n/ui';
+import type { Localized } from '../../../data/types';
 import { useTranslations } from '../../../i18n/ui';
-interface Props { intro: Record<Locale,string>; items: string[]; lang: Locale; }
+interface Props { intro: Localized; items: string[]; lang: Locale; }
 const { intro, items, lang } = Astro.props;
 const t = useTranslations(lang);
 ---
-<section class="mx-auto max-w-7xl px-8 py-16 md:py-24">
+<section class="mx-auto max-w-7xl px-gutter py-16 md:py-24">
   <h2 class="title-rule text-2xl font-normal tracking-wide md:text-3xl" data-reveal>{t('product.varieties')}</h2>
   <div class="mt-8 md:pl-[28%]">
     <p class="max-w-2xl leading-relaxed text-muted" data-reveal>{intro[lang]}</p>

@@ -7,14 +7,14 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 <!-- Control de calidad: título izquierda, texto derecha -->
-<section id="calidad" class="mx-auto grid max-w-7xl gap-8 px-8 py-20 md:grid-cols-[1fr_1.4fr] md:py-28">
+<section id="calidad" class="mx-auto grid max-w-7xl gap-8 px-gutter py-20 md:grid-cols-[1fr_1.4fr] md:py-28">
   <h2 class="title-rule text-2xl font-normal tracking-wide md:text-3xl" data-reveal>{t('home.quality.title')}</h2>
   <p class="leading-relaxed text-muted" data-reveal>{qualityCopy.intro[lang]}</p>
 </section>
 
 <!-- Ubicación privilegiada: banda gris centrada -->
 <section class="bg-band py-24 text-center text-white md:py-32">
-  <div class="mx-auto max-w-3xl px-8">
+  <div class="mx-auto max-w-3xl px-gutter">
     <h2 class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl" data-reveal>{t('home.quality.locationTitle')}</h2>
 
     <p class="mt-8 leading-relaxed text-white/85" data-reveal>{qualityCopy.location[lang]}</p>
@@ -22,7 +22,7 @@ const t = useTranslations(lang);
 </section>
 
 <!-- Seguridad alimentaria: imagen izquierda, texto derecha -->
-<section class="mx-auto grid max-w-7xl items-center gap-10 px-8 py-20 md:grid-cols-2 md:py-28">
+<section class="mx-auto grid max-w-7xl items-center gap-10 px-gutter py-20 md:grid-cols-2 md:py-28">
   <Media name="seguridad" alt="Selección de fruta en planta" ratio="3/4" widths={[400, 768]} sizes="(min-width:768px) 384px, 90vw" class="mx-auto w-full max-w-sm" />
   <div data-reveal>
     <h2 class="title-rule text-2xl font-normal tracking-wide md:text-3xl">{t('home.quality.safetyTitle')}</h2>

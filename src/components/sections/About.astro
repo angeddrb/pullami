@@ -8,7 +8,7 @@ const t = useTranslations(lang);
 const gallery = Array.from({ length: 12 }, (_, i) => `galeria-${i + 1}`);
 ---
 <section id="nosotros" class="py-20 md:py-28">
-  <div class="mx-auto max-w-3xl px-8 text-center">
+  <div class="mx-auto max-w-3xl px-gutter text-center">
     <h2 class="title-rule is-centered text-3xl font-normal tracking-wide md:text-4xl" data-reveal>{t('home.about.title')}</h2>
     <p class="mt-8 leading-relaxed text-muted" data-reveal>{aboutCopy[lang]}</p>
   </div>
