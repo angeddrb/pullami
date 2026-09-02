@@ -1,0 +1,35 @@
+---
+// Ubicación / email / teléfono desde companyInfo. Se usa en el Footer y en la
+// sección de contacto; `variant` cambia solo los estilos, no el contenido.
+import { useTranslations, type Locale } from '../i18n/ui';
+import { companyInfo } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  variant?: 'footer' | 'section';
+}
+const { lang, variant = 'section' } = Astro.props;
+const t = useTranslations(lang);
+
+const heading =
+  variant === 'footer'
+    ? 'mb-2 text-xs font-semibold uppercase tracking-widest text-white'
+    : 'text-sm font-semibold tracking-wide';
+const link =
+  variant === 'footer'
+    ? 'text-sm leading-relaxed text-white/60 hover:text-white'
+    : 'mt-1 block text-white/60 hover:text-white';
+const tel = companyInfo.phone.replace(/\s/g, '');
+---
+<div>
+  <h3 class={heading}>{t('contact.location')}</h3>
+  <a class={link} href={companyInfo.mapUrl} target="_blank" rel="noopener">{companyInfo.address[lang]}</a>
+</div>
+<div>
+  <h3 class={heading}>{t('contact.email')}</h3>
+  <a class={link} href={`mailto:${companyInfo.email}`}>{companyInfo.email}</a>
+</div>
+<div>
+  <h3 class={heading}>{t('contact.phone')}</h3>
+  <a class={link} href={`tel:${tel}`}>{companyInfo.phone}</a>
+</div>

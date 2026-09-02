@@ -11,9 +11,19 @@ const multiSlide = product.slides.length > 1;
 ---
 <section class="relative h-[70svh] w-full overflow-hidden bg-dark">
   <div class="flex h-full snap-x snap-mandatory overflow-x-auto scrollbar-none" data-hero-track>
-    {product.slides.map((slide) => (
+    {product.slides.map((slide, i) => (
       <div class="relative h-full w-full shrink-0 snap-center">
-        <Media name={slide} alt={product.name[lang]} ratio="auto" rounded={false} widths={[800, 1280, 1920]} sizes="100vw" class="h-full w-full" />
+        <Media
+          name={slide}
+          alt={product.name[lang]}
+          ratio="auto"
+          rounded={false}
+          widths={[800, 1280, 1920]}
+          sizes="100vw"
+          class="h-full w-full"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+        />
         <div class="absolute inset-0 bg-black/30"></div>
       </div>
     ))}

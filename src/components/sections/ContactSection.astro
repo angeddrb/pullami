@@ -1,6 +1,6 @@
 ---
 import { useTranslations, type Locale } from '../../i18n/ui';
-import { companyInfo } from '../../data/site';
+import ContactDetails from '../ContactDetails.astro';
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
@@ -12,18 +12,7 @@ const inputCls = 'w-full border-0 border-b border-white/30 bg-transparent py-2 t
 
     <div class="mt-14 grid gap-14 lg:grid-cols-2">
       <div class="space-y-8" data-reveal>
-        <div>
-          <h3 class="text-sm font-semibold tracking-wide">{t('contact.location')}</h3>
-          <a class="mt-1 block text-white/60 hover:text-white" href={companyInfo.mapUrl} target="_blank" rel="noopener">{companyInfo.address[lang]}</a>
-        </div>
-        <div>
-          <h3 class="text-sm font-semibold tracking-wide">{t('contact.email')}</h3>
-          <a class="mt-1 block text-white/60 hover:text-white" href={`mailto:${companyInfo.email}`}>{companyInfo.email}</a>
-        </div>
-        <div>
-          <h3 class="text-sm font-semibold tracking-wide">{t('contact.phone')}</h3>
-          <a class="mt-1 block text-white/60 hover:text-white" href={`tel:${companyInfo.phone.replace(/\s/g,'')}`}>{companyInfo.phone}</a>
-        </div>
+        <ContactDetails lang={lang} />
       </div>
 
       <!-- Paso 2: backend pendiente (Web3Forms / Formspree / Cloudflare Function) -->

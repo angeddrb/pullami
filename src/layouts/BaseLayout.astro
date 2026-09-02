@@ -11,6 +11,8 @@ interface Props {
   description?: string;
   /** Alternate-language URL for the language switch + hreflang. */
   altPath: string;
+  /** LCP image to preload (e.g. el poster del hero en la home). */
+  preloadImage?: string;
 }
 
 const {
@@ -18,6 +20,7 @@ const {
   title = 'Pullami',
   description = 'Empresa agrícola y exportadora de arándanos, cerezas, nueces y avellanas — Coihueco, Región de Ñuble, Chile.',
   altPath,
+  preloadImage,
 } = Astro.props;
 
 // Canonical siempre sobre el dominio real (site), no localhost.
@@ -32,6 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
 
     <title>{title}</title>
 

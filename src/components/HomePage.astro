@@ -15,7 +15,12 @@ const { lang, altPath } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<BaseLayout lang={lang} altPath={altPath} title="Pullami">
+<BaseLayout
+  lang={lang}
+  altPath={altPath}
+  title="Pullami"
+  preloadImage="/uploads/video/pullami-poster.webp"
+>
   <h1 class="sr-only">{t('home.srTitle')}</h1>
   <HeroVideo lang={lang} />
   <ProductsGrid lang={lang} />

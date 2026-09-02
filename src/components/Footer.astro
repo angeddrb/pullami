@@ -1,12 +1,11 @@
 ---
-import { useTranslations, type Locale } from '../i18n/ui';
-import { companyInfo } from '../data/site';
+import type { Locale } from '../i18n/ui';
+import ContactDetails from './ContactDetails.astro';
 
 interface Props {
   lang: Locale;
 }
 const { lang } = Astro.props;
-const t = useTranslations(lang);
 ---
 
 <footer class="bg-dark text-white/80">
@@ -16,23 +15,7 @@ const t = useTranslations(lang);
     <img src="/logo_pullami.svg" alt="Pullami" class="h-8 w-auto" width="150" height="40" />
 
     <div class="grid flex-1 gap-8 sm:grid-cols-3 md:max-w-2xl md:pl-12">
-      <div>
-        <h3 class="mb-2 text-xs font-semibold uppercase tracking-widest text-white">{t('contact.location')}</h3>
-        <a class="text-sm leading-relaxed text-white/60 hover:text-white" href={companyInfo.mapUrl} target="_blank" rel="noopener">
-          {companyInfo.address[lang]}
-        </a>
-      </div>
-      <div>
-        <h3 class="mb-2 text-xs font-semibold uppercase tracking-widest text-white">{t('contact.email')}</h3>
-        <a class="text-sm text-white/60 hover:text-white" href={`mailto:${companyInfo.email}`}>{companyInfo.email}</a>
-      </div>
-      <div>
-        <h3 class="mb-2 text-xs font-semibold uppercase tracking-widest text-white">{t('contact.phone')}</h3>
-        <a class="text-sm text-white/60 hover:text-white" href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}>
-          {companyInfo.phone}
-        </a>
-      </div>
+      <ContactDetails lang={lang} variant="footer" />
     </div>
-
   </div>
 </footer>
