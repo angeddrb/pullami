@@ -1,0 +1,11 @@
+---
+import type { Locale } from '../../../i18n/ui';
+import type { Localized } from '../../../data/types';
+import Media from '../../Media.astro';
+interface Props { image: string; alt?: Localized; lang: Locale; }
+const { image } = Astro.props;
+---
+<!-- Full-bleed image band. Paso 2: swap for optimized <Image>. -->
+<section class="w-full">
+  <Media name={image} ratio="21/9" rounded={false} class="w-full" />
+</section>

@@ -1,0 +1,40 @@
+---
+import type { Product } from '../../data/types';
+import type { Locale } from '../../i18n/ui';
+import Media from '../Media.astro';
+import { findImage } from '../../lib/images';
+interface Props { product: Product; lang: Locale; }
+const { product, lang } = Astro.props;
+const icon = findImage(product.icon);
+---
+<section class="relative h-[70svh] w-full overflow-hidden bg-dark">
+  <div class="flex h-full snap-x snap-mandatory overflow-x-auto scrollbar-none">
+    {product.slides.map((slide) => (
+      <div class="relative h-full w-full shrink-0 snap-center">
+        <Media name={slide} alt={product.name[lang]} ratio="auto" rounded={false} widths={[800, 1280, 1920]} sizes="100vw" class="h-full w-full" />
+        <div class="absolute inset-0 bg-black/30"></div>
+      </div>
+    ))}
+  </div>
+
+  <div class="pointer-events-none absolute inset-0 grid place-items-center text-center">
+    <div>
+      {
+        icon ? (
+          <img src={icon.src} alt="" class="mx-auto mb-3 h-16 w-16 object-contain" aria-hidden="true" />
+        ) : (
+          <div class="mx-auto mb-3 grid h-16 w-16 place-items-center rounded-full border border-white/70 text-white/90" aria-hidden="true">
+            <span class="text-xs uppercase tracking-wider">icon</span>
+          </div>
+        )
+      }
+      <h1 class="text-4xl font-extralight tracking-wide text-white drop-shadow md:text-6xl">{product.name[lang]}</h1>
+    </div>
+  </div>
+
+  <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
+    {product.slides.map((_, i) => (
+      <span class:list={['h-2 w-2 rounded-full', i === 0 ? 'bg-white' : 'bg-white/40']}></span>
+    ))}
+  </div>
+</section>

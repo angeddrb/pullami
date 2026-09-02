@@ -1,0 +1,47 @@
+---
+import type { Locale } from "../../../i18n/ui";
+import { useTranslations, months } from "../../../i18n/ui";
+import Media from "../../Media.astro";
+interface Props {
+  scientificName: string;
+  monthsActive: number[];
+  image?: string;
+  accent: string;
+  lang: Locale;
+}
+const { scientificName, monthsActive, image, accent, lang } = Astro.props;
+const t = useTranslations(lang);
+const labels = months[lang];
+---
+
+<section
+  class="mx-auto grid max-w-5xl items-center gap-10 px-gutter py-12 md:grid-cols-[1.4fr_1fr] md:py-16"
+>
+  <div>
+    <h3 class="title-rule text-xl font-light tracking-wide" data-reveal>
+      {t("product.availability")}
+    </h3>
+    <p class="mt-3 text-sm italic text-muted" data-reveal>{scientificName}</p>
+    <div class="mt-8 flex flex-wrap gap-x-2 gap-y-4" data-reveal>
+      {
+        labels.map((m, i) => {
+          const on = monthsActive.includes(i + 1);
+          return (
+            <div class="flex w-8 flex-col items-center gap-2">
+              <span
+                class="h-5 w-5 rounded-full"
+                style={
+                  on
+                    ? `background-color:var(--color-fruit-${accent})`
+                    : "background-color:#d8d8d8"
+                }
+              />
+              <span class="text-sm text-muted">{m}</span>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+  {image && <Media name={image} ratio="4/3" accent={`fruit-${accent}`} />}
+</section>

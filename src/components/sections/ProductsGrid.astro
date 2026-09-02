@@ -1,0 +1,62 @@
+---
+import { useTranslations, localizedPath, type Locale } from "../../i18n/ui";
+import { products } from "../../data/products";
+import Media from "../Media.astro";
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section
+  id="productos"
+  class="mx-auto max-w-7xl scroll-mt-20 px-8 py-20 text-center md:py-28"
+>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="mx-auto mb-2 h-13 w-auto text-brand-green"
+    aria-hidden="true"
+  >
+    <path
+      d="M11.4991 18.8611L11.4948 13.8611C12.626 11.8611 14 10.3612 17.5 8.86114M11 13.8611C11 13.8611 4 19.3611 1.5 8.86108C1.5 8.86108 11 5.8611 11 13.8611ZM11 13.8611L7.5 11.8611M13.5 11.3611C13.5 11.3611 22.5 14.8611 22.5 5.36115C22.5 5.36115 13.5 3.36112 13.5 11.3611Z"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+  <h2
+    class="title-rule is-centered text-3xl font-normal tracking-wide md:text-4xl"
+    data-reveal
+  >
+    {t("home.products.title")}
+  </h2>
+
+  <div class="mt-14 grid grid-cols-2 gap-x-4 lg:grid-cols-4">
+    {
+      products.map((p, i) => (
+        <a
+          href={localizedPath(lang, `/productos/${p.slug}/`)}
+          class="group flex flex-col items-center gap-4"
+          data-reveal
+          style={`transition-delay:${i * 80}ms`}
+        >
+          <Media
+            name={`producto-${p.slug}`}
+            alt={p.name[lang]}
+            ratio="auto"
+            rounded={false}
+            widths={[300, 600]}
+            sizes="(min-width: 1024px) 280px, 240px"
+            class="w-60"
+          />
+          <span class="text-lg font-light tracking-wide">{p.name[lang]}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>

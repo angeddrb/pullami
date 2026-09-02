@@ -1,0 +1,39 @@
+---
+import type { Product } from '../../data/types';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/ui';
+import Varieties from './blocks/Varieties.astro';
+import Availability from './blocks/Availability.astro';
+import Markets from './blocks/Markets.astro';
+import DataTable from './blocks/DataTable.astro';
+import Process from './blocks/Process.astro';
+import Certifications from './blocks/Certifications.astro';
+import ImageBand from './blocks/ImageBand.astro';
+
+interface Props { product: Product; lang: Locale; }
+const { product, lang } = Astro.props;
+const t = useTranslations(lang);
+const accent = product.accent;
+---
+{
+  product.blocks.map((block) => {
+    switch (block.type) {
+      case 'varieties':
+        return <Varieties intro={block.intro} items={block.items} lang={lang} />;
+      case 'availability':
+        return <Availability scientificName={block.scientificName} monthsActive={block.monthsActive} image={block.image} accent={accent} lang={lang} />;
+      case 'markets':
+        return <Markets pins={block.pins} accent={accent} lang={lang} />;
+      case 'nutrition':
+        return <DataTable title={t('product.nutrition')} rows={block.rows} image={block.image} accent={accent} imageSide="right" lang={lang} />;
+      case 'energy':
+        return <DataTable title={t('product.energy')} rows={block.rows} image={block.image} accent={accent} imageSide="left" lang={lang} />;
+      case 'process':
+        return <Process variant={block.variant} items={block.items} lang={lang} />;
+      case 'certifications':
+        return <Certifications intro={block.intro} items={block.items} lang={lang} />;
+      case 'imageBand':
+        return <ImageBand image={block.image} alt={block.alt} lang={lang} />;
+    }
+  })
+}

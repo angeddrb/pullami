@@ -1,0 +1,32 @@
+---
+// Labeled media placeholder for Paso 1. Swap for <Image>/<video> in Paso 2.
+interface Props {
+  label: string;
+  ratio?: string;       // e.g. "16/9", "1/1", "auto"
+  rounded?: boolean;
+  class?: string;
+}
+const { label, ratio = '16/9', rounded = true, class: klass = '' } = Astro.props;
+---
+<div
+  class:list={[
+    'placeholder relative grid place-items-center overflow-hidden bg-[#f2f2f2] text-muted',
+    rounded && 'rounded-xl',
+    klass,
+  ]}
+  style={ratio === 'auto' ? '' : `aspect-ratio:${ratio};`}
+  data-placeholder
+>
+  <div class="placeholder__grid absolute inset-0" aria-hidden="true"></div>
+  <span class="relative z-10 px-3 text-center text-[11px] font-medium uppercase tracking-wider text-muted">
+    {label}
+  </span>
+</div>
+<style>
+  .placeholder__grid {
+    background-image:
+      linear-gradient(rgba(0,0,0,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+</style>

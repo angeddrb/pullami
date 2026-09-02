@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import Placeholder from './Placeholder.astro';
+import { findImage } from '../lib/images';
+
+interface Props {
+  name: string;
+  alt?: string;
+  ratio?: string;        // "16/9", "1/1", "auto"
+  rounded?: boolean;
+  class?: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'auto';
+}
+
+const {
+  name,
+  alt = '',
+  ratio = '16/9',
+  rounded = true,
+  class: klass = '',
+  widths,
+  sizes,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+} = Astro.props;
+
+const img = findImage(name);
+const aspect = ratio === 'auto' ? '' : `aspect-ratio:${ratio};`;
+// Cap responsive widths to the asset's native width.
+const w = (widths ?? [img?.width ?? 1280]).filter((x) => !img || x <= img.width);
+const finalWidths = w.length ? w : img ? [img.width] : undefined;
+---
+
+{
+  img ? (
+    <Image
+      src={img}
+      alt={alt}
+      widths={finalWidths}
+      sizes={sizes ?? '100vw'}
+      format="webp"
+      quality={85}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class:list={['object-cover', rounded && 'rounded-xl', klass]}
+      style={aspect}
+    />
+  ) : (
+    <Placeholder label={name} ratio={ratio} rounded={rounded} class={klass} />
+  )
+}

@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  title?: string;
+  description?: string;
+  /** Alternate-language URL for the language switch + hreflang. */
+  altPath: string;
+}
+
+const {
+  lang,
+  title = 'Pullami',
+  description = 'Empresa agrícola y exportadora de arándanos, cerezas, nueces y avellanas — Coihueco, Región de Ñuble, Chile.',
+  altPath,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={Astro.url.href} />
+
+    <link rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'} href={new URL(altPath, Astro.site).href} />
+
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen bg-white font-body text-ink antialiased">
+    <Header lang={lang} altPath={altPath} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <script>
+      // Scroll-reveal (replaces AOS). Tiny IntersectionObserver, no library.
+      const setup = () => {
+        const els = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) || !els.length) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+        );
+        els.forEach((el) => io.observe(el));
+      };
+      setup();
+      document.addEventListener('astro:after-swap', setup);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+---
+import type { Locale } from "../../../i18n/ui";
+import type { DataRow } from "../../../data/types";
+import { useTranslations } from "../../../i18n/ui";
+import Media from "../../Media.astro";
+interface Props {
+  title: string;
+  rows: DataRow[];
+  image?: string;
+  accent: string;
+  imageSide?: "left" | "right";
+  lang: Locale;
+}
+const { title, rows, image, accent, imageSide = "right", lang } = Astro.props;
+const t = useTranslations(lang);
+const imgLeft = imageSide === "left";
+---
+
+<section class="grid items-center gap-8 py-14 md:grid-cols-2 md:gap-0 md:py-20">
+  <!-- Tabla: padding propio, contenido alineado hacia el centro -->
+  <div
+    class:list={[
+      "px-8 md:flex",
+      imgLeft ? "md:order-2 md:justify-start" : "md:order-1 md:justify-end",
+    ]}
+  >
+    <div class="w-full md:max-w-md">
+      <h3 class="text-2xl font-light tracking-wide" data-reveal>{title}</h3>
+      <p
+        class="mt-1 text-xs"
+        style={`color:var(--color-fruit-${accent})`}
+        data-reveal
+      >
+        {t("product.per100")}
+      </p>
+      <dl
+        class="mt-6 divide-y divide-hairline border-t border-hairline"
+        data-reveal
+      >
+        {
+          rows.map((r) => (
+            <div class="grid grid-cols-[1fr_1.2fr] gap-4 py-3">
+              <dt class="text-sm font-semibold">{r.label[lang]}</dt>
+              <dd class="text-sm" style={`color:var(--color-fruit-${accent})`}>
+                {r.value[lang]}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+
+  <!-- Imagen: full-bleed hacia el borde (fondo blanco se funde con la página) -->
+  {
+    image && (
+      <div
+        class:list={["w-full", imgLeft ? "md:order-1" : "md:order-2"]}
+        data-reveal
+      >
+        <Media
+          name={image}
+          alt=""
+          ratio="auto"
+          rounded={false}
+          widths={[600, 1000]}
+          sizes="(min-width:768px) 50vw, 100vw"
+          class="w-full"
+        />
+      </div>
+    )
+  }
+</section>

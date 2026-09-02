@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@import "@fontsource-variable/raleway";
+
+/*
+  Pullami design tokens — derived from the real site screenshots + brand assets.
+  Structural palette is black / white / gray; color shows up only in the
+  per-fruit accents and the green sprout from the logo.
+*/
+@theme {
+  /* Structure */
+  --color-dark: #000000;
+  --color-band: #6e6e6e;        /* gray full-width bands (Ubicación, Proceso) */
+  --color-paper: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-hairline: #e6e6e6;
+
+  /* Brand green (logo sprout) — used sparingly */
+  --color-brand-green: #007b3b;
+  --color-brand-lime: #72bf44; 
+
+  /* Per-fruit accents (from brand) */
+  --color-fruit-arandanos: #69297d;
+  --color-fruit-nueces: #db7727;
+  --color-fruit-avellanas: #b55739;
+  --color-fruit-cerezas: #b32135;
+
+  /* Type — Raleway (Google Font), self-hosted via Fontsource for performance */
+  --font-body: "Raleway Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-body);
+
+  --spacing-gutter: clamp(1.25rem, 5vw, 6rem);
+}
+
+/*
+  Fruit accents are applied via inline `style="...var(--color-fruit-X)..."`,
+  which Tailwind's @theme tree-shaking can't see. Define them here in :root
+  so they're always emitted.
+*/
+:root {
+  --color-fruit-arandanos: #69297d;
+  --color-fruit-nueces: #db7727;
+  --color-fruit-avellanas: #b55739;
+  --color-fruit-cerezas: #b32135;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: #ffffff;
+}
+
+body {
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Headings lean light, like the real site */
+h1, h2, h3 {
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Scroll-reveal (replaces AOS) */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  [data-reveal].is-visible { opacity: 1; transform: none; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-fruit-arandanos);
+  outline-offset: 2px;
+}
+
+/* Thin underline used under section titles on the real site */
+.title-rule::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  margin-top: 0.75rem;
+}
+.title-rule.is-centered::after { margin-inline: auto; }
