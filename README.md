@@ -53,6 +53,8 @@ lightbox y sonido con scripts vanilla mínimos. Raleway self-hosted (Fontsource)
 4. **`world-map`** real para Mercados; **logos de certificación** reales.
 5. **Íconos de producto** (`icon-{fruta}.svg`) y **logo_chile.svg**.
 6. **URLs reales** de Instagram/LinkedIn (`companyInfo.social`).
+7. **`og:image`** 1200×630 para compartir en redes (hoy no hay; el `<meta>`
+   queda como TODO en `BaseLayout.astro`).
 
 ## Bugs del sitio original ya corregidos
 

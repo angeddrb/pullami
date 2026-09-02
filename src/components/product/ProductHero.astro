@@ -1,14 +1,16 @@
 ---
 import type { Product } from '../../data/types';
-import type { Locale } from '../../i18n/ui';
+import { useTranslations, type Locale } from '../../i18n/ui';
 import Media from '../Media.astro';
 import { findImage } from '../../lib/images';
 interface Props { product: Product; lang: Locale; }
 const { product, lang } = Astro.props;
+const t = useTranslations(lang);
 const icon = findImage(product.icon);
+const multiSlide = product.slides.length > 1;
 ---
 <section class="relative h-[70svh] w-full overflow-hidden bg-dark">
-  <div class="flex h-full snap-x snap-mandatory overflow-x-auto scrollbar-none">
+  <div class="flex h-full snap-x snap-mandatory overflow-x-auto scrollbar-none" data-hero-track>
     {product.slides.map((slide) => (
       <div class="relative h-full w-full shrink-0 snap-center">
         <Media name={slide} alt={product.name[lang]} ratio="auto" rounded={false} widths={[800, 1280, 1920]} sizes="100vw" class="h-full w-full" />
@@ -32,9 +34,56 @@ const icon = findImage(product.icon);
     </div>
   </div>
 
-  <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
-    {product.slides.map((_, i) => (
-      <span class:list={['h-2 w-2 rounded-full', i === 0 ? 'bg-white' : 'bg-white/40']}></span>
-    ))}
-  </div>
+  {multiSlide && (
+    <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2" data-hero-dots>
+      {product.slides.map((_, i) => (
+        <button
+          type="button"
+          data-slide={i}
+          aria-label={`${t('product.slide')} ${i + 1}`}
+          aria-current={i === 0 ? 'true' : undefined}
+          class:list={['h-2 w-2 rounded-full transition', i === 0 ? 'bg-white' : 'bg-white/40']}
+        />
+      ))}
+    </div>
+  )}
 </section>
+
+<script>
+  const wire = () => {
+    document.querySelectorAll<HTMLElement>('[data-hero-track]').forEach((track) => {
+      const dotsWrap = track.parentElement?.querySelector('[data-hero-dots]');
+      if (!dotsWrap) return;
+      const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('button'));
+      const slides = Array.from(track.children) as HTMLElement[];
+
+      const setActive = (idx: number) => {
+        dots.forEach((d, i) => {
+          const on = i === idx;
+          d.classList.toggle('bg-white', on);
+          d.classList.toggle('bg-white/40', !on);
+          if (on) d.setAttribute('aria-current', 'true');
+          else d.removeAttribute('aria-current');
+        });
+      };
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+        });
+      });
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) setActive(slides.indexOf(e.target as HTMLElement));
+          });
+        },
+        { root: track, threshold: 0.6 }
+      );
+      slides.forEach((s) => io.observe(s));
+    });
+  };
+  wire();
+  document.addEventListener('astro:after-swap', wire);
+</script>

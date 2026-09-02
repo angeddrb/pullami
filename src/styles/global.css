@@ -80,8 +80,9 @@ h1, h2, h3 {
   [data-reveal].is-visible { opacity: 1; transform: none; }
 }
 
+/* currentColor adapts to context: dark on light sections, white on dark bands. */
 :focus-visible {
-  outline: 2px solid var(--color-fruit-arandanos);
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 

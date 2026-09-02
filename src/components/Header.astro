@@ -113,12 +113,30 @@ const chile = findImage('logo_chile');
       menu.classList.toggle('opacity-0', !state);
       toggle.setAttribute('aria-expanded', String(state));
       document.body.style.overflow = state ? 'hidden' : '';
+      // Mover el foco al overlay al abrir; devolverlo al botón al cerrar.
+      if (state) close?.focus();
+      else toggle.focus();
     };
     toggle.addEventListener('click', () => open(true));
     close?.addEventListener('click', () => open(false));
     menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => open(false)));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') open(false);
+    });
+    // Focus-trap: mantener el Tab dentro del overlay mientras está abierto.
+    menu.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const f = menu.querySelectorAll<HTMLElement>('a[href], button');
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
   };
   wire();

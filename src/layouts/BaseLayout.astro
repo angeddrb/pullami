@@ -19,6 +19,9 @@ const {
   description = 'Empresa agrícola y exportadora de arándanos, cerezas, nueces y avellanas — Coihueco, Región de Ñuble, Chile.',
   altPath,
 } = Astro.props;
+
+// Canonical siempre sobre el dominio real (site), no localhost.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -27,17 +30,22 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>{title}</title>
 
+    <link rel="canonical" href={canonical} />
+
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:url" content={canonical} />
+    {/* TODO Paso 2: og:image 1200×630 (ver ASSETS.md). */}
 
+    <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={lang === 'es' ? 'en' : 'es'} href={new URL(altPath, Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(lang === 'es' ? Astro.url.pathname : altPath, Astro.site).href} />
 
     <ClientRouter />
   </head>

@@ -15,7 +15,7 @@ const gallery = Array.from({ length: 12 }, (_, i) => `galeria-${i + 1}`);
 
   <div class="mt-16 grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-4">
     {gallery.map((name, i) => (
-      <button class="gallery-item group relative block aspect-square overflow-hidden" data-reveal data-index={i} style={`transition-delay:${(i%4)*50}ms`} aria-label={t('gallery.view')}>
+      <button class="gallery-item group relative block aspect-square overflow-hidden" data-reveal data-index={i} style={`transition-delay:${(i%4)*50}ms`} aria-label={`${t('gallery.view')} ${i + 1}`}>
         <Media name={name} alt="" ratio="1/1" rounded={false} widths={[400, 800]} sizes="(min-width:1024px) 25vw, 50vw" class="h-full w-full" />
         <span class="absolute inset-0 grid place-items-center bg-black/0 text-sm font-light text-white opacity-0 transition group-hover:bg-black/40 group-hover:opacity-100">
           {t('gallery.view')}
