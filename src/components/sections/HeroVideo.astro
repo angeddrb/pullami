@@ -24,19 +24,6 @@ const t = useTranslations(lang);
 
   <div class="absolute inset-0 bg-black/15"></div>
 
-  <button
-    id="hero-sound"
-    class="absolute bottom-6 right-gutter z-20 text-white/80 transition hover:text-white"
-    aria-pressed="false"
-    aria-label={t('hero.soundOn')}
-  >
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-      <line x1="23" y1="9" x2="17" y2="15"></line>
-      <line x1="17" y1="9" x2="23" y2="15"></line>
-    </svg>
-  </button>
-
   <a
     href="#productos"
     class="absolute bottom-8 left-1/2 z-20 grid h-11 w-11 -translate-x-1/2 place-items-center rounded-full border border-white/60 text-white/80 transition hover:text-white"
@@ -47,19 +34,3 @@ const t = useTranslations(lang);
     </svg>
   </a>
 </section>
-
-<script>
-  // The hero video has no audio track (stripped for autoplay + weight).
-  // The sound button is wired but inert until a video with audio is added.
-  const wire = () => {
-    const btn = document.getElementById('hero-sound');
-    const video = document.querySelector<HTMLVideoElement>('section video');
-    if (!btn || !video) return;
-    btn.addEventListener('click', () => {
-      video.muted = !video.muted;
-      btn.setAttribute('aria-pressed', String(!video.muted));
-    });
-  };
-  wire();
-  document.addEventListener('astro:after-swap', wire);
-</script>

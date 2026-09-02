@@ -34,6 +34,9 @@ const accent = product.accent;
         return <Certifications intro={block.intro} items={block.items} lang={lang} />;
       case 'imageBand':
         return <ImageBand image={block.image} alt={block.alt} lang={lang} />;
+      default:
+        // Falla en build si se agrega un tipo de bloque sin componente.
+        return ((_: never) => null)(block);
     }
   })
 }

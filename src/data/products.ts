@@ -18,7 +18,6 @@ export const products: Product[] = [
     name: { es: 'Arándanos', en: 'Blueberries' },
     icon: 'icon-arandanos',
     slides: ['arandanos-slider-1', 'arandanos-slider-2'],
-    video: { desktop: 'arandanos', mobile: 'arandanos-mobile', poster: 'arandanos-poster' },
     blocks: [
       {
         type: 'varieties',
@@ -101,7 +100,6 @@ export const products: Product[] = [
     name: { es: 'Nueces', en: 'Walnuts' },
     icon: 'icon-nueces',
     slides: ['nueces-slider-1', 'nueces-slider-2'],
-    video: { desktop: 'nueces', mobile: 'nueces-mobile', poster: 'nueces-poster' },
     blocks: [
       {
         type: 'varieties',
@@ -173,7 +171,6 @@ export const products: Product[] = [
     name: { es: 'Avellanas', en: 'Hazelnuts' },
     icon: 'icon-avellanas',
     slides: ['avellanas-slider-1', 'avellanas-slider-2'],
-    video: { desktop: 'avellanas', mobile: 'avellanas-mobile', poster: 'avellanas-poster' },
     blocks: [
       {
         type: 'varieties',
@@ -237,7 +234,6 @@ export const products: Product[] = [
     name: { es: 'Cerezas', en: 'Cherries' },
     icon: 'icon-cerezas',
     slides: ['cerezas-slider-1', 'cerezas-slider-2', 'cerezas-slider-3', 'cerezas-slider-4'],
-    video: { desktop: 'cerezas', mobile: 'cerezas-mobile', poster: 'cerezas-poster' },
     blocks: [
       {
         type: 'varieties',

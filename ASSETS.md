@@ -21,7 +21,7 @@ placeholder. No hay que tocar código.
 ## Home  ✅ (ya cargado)
 
 `producto-{fruta}` · `galeria-1..12` · `seguridad` · video `pullami-hero.mp4` +
-`pullami-poster.webp` · `hojas.png`.
+`pullami-poster.webp`.
 
 ## Fichas de producto — drop-in
 

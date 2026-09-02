@@ -49,7 +49,5 @@ export interface Product {
   icon: string;
   /** hero slider images (asset basenames) */
   slides: string[];
-  /** background/hero video sources (asset basenames) */
-  video: { desktop: string; mobile: string; poster: string };
   blocks: ProductBlock[];
 }
