@@ -1,36 +1,49 @@
 ---
-import type { Locale } from '../../../i18n/ui';
-import type { Localized } from '../../../data/types';
-import { useTranslations } from '../../../i18n/ui';
+import type { Locale } from "../../../i18n/ui";
+import type { Localized } from "../../../data/types";
+import { useTranslations } from "../../../i18n/ui";
 interface Props {
-  variant: 'band' | 'columns';
+  variant: "band" | "columns";
   items: { title?: Localized; text: Localized }[];
   lang: Locale;
 }
 const { variant, items, lang } = Astro.props;
 const t = useTranslations(lang);
 ---
-{variant === 'band' ? (
-  <section class="bg-band py-20 text-white md:py-28">
-    <div class="mx-auto max-w-3xl px-gutter text-center">
-      <h2 class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl" data-reveal>
-        {t('product.process')}
+
+{
+  variant === "band" ? (
+    <section class="bg-band py-20 text-white md:py-28">
+      <div class="mx-auto max-w-3xl px-8 text-center">
+        <h2
+          class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl"
+          data-reveal
+        >
+          {t("product.process")}
+        </h2>
+        {items.map((it) => (
+          <p class="mt-8 leading-relaxed text-white/85" data-reveal>
+            {it.text[lang]}
+          </p>
+        ))}
+      </div>
+    </section>
+  ) : (
+    <section class="mx-auto grid max-w-7xl gap-10 px-8 py-16 md:grid-cols-[1fr_2fr] md:py-24">
+      <h2
+        class="title-rule text-2xl font-normal tracking-wide md:text-3xl"
+        data-reveal
+      >
+        {t("product.process")}
       </h2>
-      {items.map((it) => (
-        <p class="mt-8 leading-relaxed text-white/85" data-reveal>{it.text[lang]}</p>
-      ))}
-    </div>
-  </section>
-) : (
-  <section class="mx-auto grid max-w-7xl gap-10 px-gutter py-16 md:grid-cols-[1fr_2fr] md:py-24">
-    <h2 class="title-rule text-2xl font-normal tracking-wide md:text-3xl" data-reveal>{t('product.process')}</h2>
-    <div class="space-y-8">
-      {items.map((it) => (
-        <div data-reveal>
-          {it.title && <h3 class="mb-2 font-semibold">{it.title[lang]}</h3>}
-          <p class="leading-relaxed text-muted">{it.text[lang]}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-)}
+      <div class="space-y-8">
+        {items.map((it) => (
+          <div data-reveal>
+            {it.title && <h3 class="mb-2 font-semibold">{it.title[lang]}</h3>}
+            <p class="leading-relaxed text-muted">{it.text[lang]}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}

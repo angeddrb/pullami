@@ -1,7 +1,7 @@
 ---
-import type { Locale } from '../../../i18n/ui';
-import { useTranslations, months } from '../../../i18n/ui';
-import Media from '../../Media.astro';
+import type { Locale } from "../../../i18n/ui";
+import { useTranslations, months } from "../../../i18n/ui";
+import Media from "../../Media.astro";
 interface Props {
   scientificName: string;
   monthsActive: number[];
@@ -15,7 +15,7 @@ const labels = months[lang];
 ---
 
 <section
-  class="mx-auto grid max-w-5xl items-center gap-10 px-gutter py-12 md:grid-cols-[1.4fr_1fr] md:py-16"
+  class="mx-auto grid max-w-5xl items-center gap-10 px-8 py-12 md:grid-cols-[1.4fr_1fr] md:py-16"
 >
   <div>
     <h3 class="title-rule text-xl font-light tracking-wide" data-reveal>
@@ -33,7 +33,7 @@ const labels = months[lang];
                 style={
                   on
                     ? `background-color:var(--color-fruit-${accent})`
-                    : 'background-color:#d8d8d8'
+                    : "background-color:#d8d8d8"
                 }
               />
               <span class="text-sm text-muted">{m}</span>

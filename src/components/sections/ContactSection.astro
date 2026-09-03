@@ -1,14 +1,23 @@
 ---
-import { useTranslations, type Locale } from '../../i18n/ui';
-import ContactDetails from '../ContactDetails.astro';
-interface Props { lang: Locale; }
+import { useTranslations, type Locale } from "../../i18n/ui";
+import ContactDetails from "../ContactDetails.astro";
+interface Props {
+  lang: Locale;
+}
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const inputCls = 'w-full border-0 border-b border-white/30 bg-transparent py-2 text-white focus:border-white focus:outline-none';
+const inputCls =
+  "w-full border-0 border-b border-white/30 bg-transparent py-2 text-white focus:border-white focus:outline-none";
 ---
+
 <section id="contacto" class="scroll-mt-16 bg-dark py-20 text-white md:py-28">
-  <div class="mx-auto max-w-7xl px-gutter">
-    <h2 class="max-w-2xl text-2xl font-normal leading-snug tracking-wide md:text-4xl" data-reveal>{t('contact.title')}</h2>
+  <div class="mx-auto max-w-7xl px-8">
+    <h2
+      class="max-w-2xl text-2xl font-normal leading-snug tracking-wide md:text-4xl"
+      data-reveal
+    >
+      {t("contact.title")}
+    </h2>
 
     <div class="mt-14 grid gap-14 lg:grid-cols-2">
       <div class="space-y-8" data-reveal>
@@ -17,16 +26,28 @@ const inputCls = 'w-full border-0 border-b border-white/30 bg-transparent py-2 t
 
       <!-- Paso 2: backend pendiente (Web3Forms / Formspree / Cloudflare Function) -->
       <form class="space-y-7" data-reveal data-pending-backend>
-        <label class="block"><span class="text-sm text-white/70">{t('form.name')}</span>
-          <input type="text" name="name" required class={inputCls} /></label>
-        <label class="block"><span class="text-sm text-white/70">{t('form.email')}</span>
-          <input type="email" name="email" required class={inputCls} /></label>
-        <label class="block"><span class="text-sm text-white/70">{t('form.phone')}</span>
-          <input type="tel" name="phone" class={inputCls} /></label>
-        <label class="block"><span class="text-sm text-white/70">{t('form.message')}</span>
-          <textarea name="message" rows="3" required class={inputCls}></textarea></label>
-        <button type="submit" class="rounded-full border border-white px-10 py-3 font-light tracking-wide transition hover:bg-white hover:text-dark">
-          {t('form.send')}
+        <label class="block"
+          ><span class="text-sm text-white/70">{t("form.name")}</span>
+          <input type="text" name="name" required class={inputCls} /></label
+        >
+        <label class="block"
+          ><span class="text-sm text-white/70">{t("form.email")}</span>
+          <input type="email" name="email" required class={inputCls} /></label
+        >
+        <label class="block"
+          ><span class="text-sm text-white/70">{t("form.phone")}</span>
+          <input type="tel" name="phone" class={inputCls} /></label
+        >
+        <label class="block"
+          ><span class="text-sm text-white/70">{t("form.message")}</span>
+          <textarea name="message" rows="3" required class={inputCls}
+          ></textarea></label
+        >
+        <button
+          type="submit"
+          class="rounded-full border border-white px-10 py-3 font-light tracking-wide transition hover:bg-white hover:text-dark"
+        >
+          {t("form.send")}
         </button>
       </form>
     </div>

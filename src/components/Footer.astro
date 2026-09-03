@@ -1,6 +1,6 @@
 ---
-import type { Locale } from '../i18n/ui';
-import ContactDetails from './ContactDetails.astro';
+import type { Locale } from "../i18n/ui";
+import ContactDetails from "./ContactDetails.astro";
 
 interface Props {
   lang: Locale;
@@ -10,9 +10,15 @@ const { lang } = Astro.props;
 
 <footer class="bg-dark text-white/80">
   <div
-    class="mx-auto flex max-w-7xl flex-col gap-10 px-gutter py-12 md:flex-row md:items-start md:justify-between"
+    class="mx-auto flex max-w-7xl flex-col gap-10 px-8 py-12 md:flex-row md:items-start md:justify-between"
   >
-    <img src="/logo_pullami.svg" alt="Pullami" class="h-8 w-auto" width="150" height="40" />
+    <img
+      src="/logo_pullami.svg"
+      alt="Pullami"
+      class="h-8 w-auto"
+      width="150"
+      height="40"
+    />
 
     <div class="grid flex-1 gap-8 sm:grid-cols-3 md:max-w-2xl md:pl-12">
       <ContactDetails lang={lang} variant="footer" />

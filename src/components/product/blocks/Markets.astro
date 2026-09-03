@@ -1,26 +1,46 @@
 ---
-import type { Locale } from '../../../i18n/ui';
-import type { MarketPin } from '../../../data/types';
-import { useTranslations } from '../../../i18n/ui';
-import { Image } from 'astro:assets';
-import { findImage } from '../../../lib/images';
-interface Props { pins: MarketPin[]; accent: string; lang: Locale; }
+import type { Locale } from "../../../i18n/ui";
+import type { MarketPin } from "../../../data/types";
+import { useTranslations } from "../../../i18n/ui";
+import { Image } from "astro:assets";
+import { findImage } from "../../../lib/images";
+interface Props {
+  pins: MarketPin[];
+  accent: string;
+  lang: Locale;
+}
 const { pins, accent, lang } = Astro.props;
 const t = useTranslations(lang);
-const map = findImage('world-map');
+const map = findImage("world-map");
 ---
+
 <section class="bg-band py-16 text-white md:py-24">
-  <div class="mx-auto max-w-7xl px-gutter">
-    <h2 class="title-rule is-centered text-center text-2xl font-normal tracking-wide md:text-3xl" data-reveal>
-      {t('product.markets')}
+  <div class="mx-auto max-w-7xl px-8">
+    <h2
+      class="title-rule is-centered text-center text-2xl font-normal tracking-wide md:text-3xl"
+      data-reveal
+    >
+      {t("product.markets")}
     </h2>
     <div class="relative mt-12 aspect-[2/1] w-full" data-reveal>
       {
         map ? (
-          map.format === 'svg' ? (
-            <img src={map.src} alt="" class="absolute inset-0 h-full w-full object-contain" />
+          map.format === "svg" ? (
+            <img
+              src={map.src}
+              alt=""
+              class="absolute inset-0 h-full w-full object-contain"
+            />
           ) : (
-            <Image src={map} alt="" widths={[800, 1280]} sizes="100vw" format="webp" loading="lazy" class="absolute inset-0 h-full w-full object-contain" />
+            <Image
+              src={map}
+              alt=""
+              widths={[800, 1280]}
+              sizes="100vw"
+              format="webp"
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-contain"
+            />
           )
         ) : (
           <div class="absolute inset-0 grid place-items-center rounded-xl bg-white/15 text-xs uppercase tracking-widest text-white/50">
@@ -28,12 +48,22 @@ const map = findImage('world-map');
           </div>
         )
       }
-      {pins.map((pin) => (
-        <span class="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={`left:${pin.x}%;top:${pin.y}%`}>
-          <span class="h-3 w-3 rounded-full ring-2 ring-white/60" style={`background-color:var(--color-fruit-${accent})`}></span>
-          <span class="mt-1 whitespace-nowrap text-[10px] font-medium uppercase tracking-wide">{pin.label[lang]}</span>
-        </span>
-      ))}
+      {
+        pins.map((pin) => (
+          <span
+            class="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+            style={`left:${pin.x}%;top:${pin.y}%`}
+          >
+            <span
+              class="h-3 w-3 rounded-full ring-2 ring-white/60"
+              style={`background-color:var(--color-fruit-${accent})`}
+            />
+            <span class="mt-1 whitespace-nowrap text-[10px] font-medium uppercase tracking-wide">
+              {pin.label[lang]}
+            </span>
+          </span>
+        ))
+      }
     </div>
   </div>
 </section>
