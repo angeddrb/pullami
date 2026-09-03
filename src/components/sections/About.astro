@@ -1,59 +1,110 @@
 ---
-import { useTranslations, type Locale } from '../../i18n/ui';
-import { aboutCopy } from '../../data/site';
-import Media from '../Media.astro';
-interface Props { lang: Locale; }
+import { useTranslations, type Locale } from "../../i18n/ui";
+import { aboutCopy } from "../../data/site";
+import Media from "../Media.astro";
+interface Props {
+  lang: Locale;
+}
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const gallery = Array.from({ length: 12 }, (_, i) => `galeria-${i + 1}`);
 ---
+
 <section id="nosotros" class="py-20 md:py-28">
   <div class="mx-auto max-w-3xl px-gutter text-center">
-    <h2 class="title-rule is-centered text-3xl font-normal tracking-wide md:text-4xl" data-reveal>{t('home.about.title')}</h2>
+    <h2
+      class="title-rule is-centered text-3xl font-normal tracking-wide md:text-4xl"
+      data-reveal
+    >
+      {t("home.about.title")}
+    </h2>
     <p class="mt-8 leading-relaxed text-muted" data-reveal>{aboutCopy[lang]}</p>
   </div>
 
   <div class="mt-16 grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-4">
-    {gallery.map((name, i) => (
-      <button class="gallery-item group relative block aspect-square overflow-hidden" data-reveal data-index={i} style={`transition-delay:${(i%4)*50}ms`} aria-label={`${t('gallery.view')} ${i + 1}`}>
-        <Media name={name} alt="" ratio="1/1" rounded={false} widths={[400, 800]} sizes="(min-width:1024px) 25vw, 50vw" class="h-full w-full" />
-        <span class="absolute inset-0 grid place-items-center bg-black/0 text-sm font-light text-white opacity-0 transition group-hover:bg-black/40 group-hover:opacity-100">
-          {t('gallery.view')}
-        </span>
-      </button>
-    ))}
+    {
+      gallery.map((name, i) => (
+        <button
+          class="gallery-item group relative block aspect-square overflow-hidden"
+          data-reveal
+          data-index={i}
+          style={`transition-delay:${(i % 4) * 50}ms`}
+          aria-label={`${t("gallery.view")} ${i + 1}`}
+        >
+          <Media
+            name={name}
+            alt=""
+            ratio="1/1"
+            rounded={false}
+            widths={[400, 800]}
+            sizes="(min-width:1024px) 25vw, 50vw"
+            class="h-full w-full"
+          />
+          <span class="absolute inset-0 grid place-items-center bg-black/0 text-sm font-light text-white opacity-0 transition group-hover:bg-black/40 group-hover:opacity-100">
+            {t("gallery.view")}
+          </span>
+        </button>
+      ))
+    }
   </div>
 </section>
 
-<div id="lightbox" class="invisible fixed inset-0 z-[100] grid place-items-center bg-black/90 p-6 opacity-0 transition-opacity">
-  <button id="lightbox-close" class="absolute right-6 top-6 text-white" aria-label="Cerrar">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+<div
+  id="lightbox"
+  class="invisible fixed inset-0 z-100 grid place-items-center bg-black/90 p-6 opacity-0 transition-opacity"
+>
+  <button
+    id="lightbox-close"
+    class="absolute right-6 top-6 text-white"
+    aria-label="Cerrar"
+  >
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line><line
+        x1="6"
+        y1="6"
+        x2="18"
+        y2="18"></line>
     </svg>
   </button>
-  <div class="aspect-[4/3] w-full max-w-3xl rounded-xl bg-white/10 grid place-items-center text-white/60">
+  <div
+    class="aspect-4/3 w-full max-w-3xl rounded-xl bg-white/10 grid place-items-center text-white/60"
+  >
     <span id="lightbox-label" class="text-sm uppercase tracking-widest"></span>
   </div>
 </div>
 
 <script>
   const wire = () => {
-    const lb = document.getElementById('lightbox');
-    const label = document.getElementById('lightbox-label');
-    const close = document.getElementById('lightbox-close');
+    const lb = document.getElementById("lightbox");
+    const label = document.getElementById("lightbox-label");
+    const close = document.getElementById("lightbox-close");
     if (!lb || !label) return;
     const show = (s: boolean) => {
-      lb.classList.toggle('invisible', !s);
-      lb.classList.toggle('opacity-0', !s);
-      document.body.style.overflow = s ? 'hidden' : '';
+      lb.classList.toggle("invisible", !s);
+      lb.classList.toggle("opacity-0", !s);
+      document.body.style.overflow = s ? "hidden" : "";
     };
-    document.querySelectorAll<HTMLElement>('.gallery-item').forEach((it) => {
-      it.addEventListener('click', () => { label.textContent = `galeria-${Number(it.dataset.index)+1}`; show(true); });
+    document.querySelectorAll<HTMLElement>(".gallery-item").forEach((it) => {
+      it.addEventListener("click", () => {
+        label.textContent = `galeria-${Number(it.dataset.index) + 1}`;
+        show(true);
+      });
     });
-    close?.addEventListener('click', () => show(false));
-    lb.addEventListener('click', (e) => { if (e.target === lb) show(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') show(false); });
+    close?.addEventListener("click", () => show(false));
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb) show(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") show(false);
+    });
   };
   wire();
-  document.addEventListener('astro:after-swap', wire);
+  document.addEventListener("astro:after-swap", wire);
 </script>
