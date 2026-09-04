@@ -34,8 +34,9 @@ export type ProductBlock =
   | { type: 'energy'; rows: DataRow[]; image?: string }
   | {
       type: 'process';
-      variant: 'band' | 'columns';
       items: { title?: Localized; text: Localized }[];
+      /** full-bleed background photo; falls back to the grey band */
+      image?: string;
     }
   | { type: 'certifications'; intro: Localized; items: { name: Localized; detail?: Localized; logo?: string }[] }
   | { type: 'imageBand'; image: string; alt?: Localized };

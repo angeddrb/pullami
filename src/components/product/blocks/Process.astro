@@ -2,48 +2,51 @@
 import type { Locale } from "../../../i18n/ui";
 import type { Localized } from "../../../data/types";
 import { useTranslations } from "../../../i18n/ui";
+import { findImage } from "../../../lib/images";
+import Media from "../../Media.astro";
 interface Props {
-  variant: "band" | "columns";
   items: { title?: Localized; text: Localized }[];
+  image?: string;
   lang: Locale;
 }
-const { variant, items, lang } = Astro.props;
+const { items, image, lang } = Astro.props;
 const t = useTranslations(lang);
+// Sin foto de fondo la banda cae al gris de bg-band.
+const bg = image ? findImage(image) : undefined;
 ---
 
-{
-  variant === "band" ? (
-    <section class="bg-band py-20 text-white md:py-28">
-      <div class="mx-auto max-w-3xl px-8 text-center">
-        <h2
-          class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl"
-          data-reveal
-        >
-          {t("product.process")}
-        </h2>
-        {items.map((it) => (
-          <p class="mt-8 leading-relaxed text-white/85" data-reveal>
-            {it.text[lang]}
-          </p>
-        ))}
-      </div>
-    </section>
-  ) : (
-    <section class="mx-auto grid max-w-7xl gap-10 px-8 py-16 md:grid-cols-[1fr_2fr] md:py-24">
-      <h2
-        class="title-rule text-2xl font-normal tracking-wide md:text-3xl"
-        data-reveal
-      >
-        {t("product.process")}
-      </h2>
-      <div class="space-y-8">
-        {items.map((it) => (
-          <div data-reveal>
-            {it.title && <h3 class="mb-2 font-semibold">{it.title[lang]}</h3>}
-            <p class="leading-relaxed text-muted">{it.text[lang]}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
+<section class="bg-band relative isolate overflow-hidden py-20 text-white md:py-28">
+  {
+    bg && (
+      <>
+        <Media
+          name={image!}
+          ratio="auto"
+          rounded={false}
+          widths={[768, 1280, 1920]}
+          sizes="100vw"
+          class="absolute inset-0 -z-10 h-full w-full"
+        />
+        <div class="absolute inset-0 -z-10 bg-black/55"></div>
+      </>
+    )
+  }
+  <div class="mx-auto max-w-3xl px-8 text-center">
+    <h2
+      class="title-rule is-centered text-2xl font-normal tracking-wide md:text-3xl"
+      data-reveal
+    >
+      {t("product.process")}
+    </h2>
+    {
+      items.map((it) => (
+        <div class="mt-8" data-reveal>
+          {it.title && (
+            <h3 class="mb-2 font-semibold tracking-wide">{it.title[lang]}</h3>
+          )}
+          <p class="leading-relaxed text-white/85">{it.text[lang]}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

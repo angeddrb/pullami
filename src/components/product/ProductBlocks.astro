@@ -29,7 +29,7 @@ const accent = product.accent;
       case 'energy':
         return <DataTable title={t('product.energy')} rows={block.rows} image={block.image} accent={accent} imageSide="left" lang={lang} />;
       case 'process':
-        return <Process variant={block.variant} items={block.items} lang={lang} />;
+        return <Process items={block.items} image={block.image} lang={lang} />;
       case 'certifications':
         return <Certifications intro={block.intro} items={block.items} lang={lang} />;
       case 'imageBand':
