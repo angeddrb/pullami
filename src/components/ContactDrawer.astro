@@ -1,0 +1,114 @@
+---
+import { useTranslations, type Locale } from "../i18n/ui";
+import ContactForm from "./ContactForm.astro";
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div
+  id="contact-drawer"
+  class="invisible fixed inset-0 z-70 opacity-0 transition-opacity duration-300"
+>
+  <div data-drawer-backdrop class="absolute inset-0 bg-black/60"></div>
+
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-drawer-title"
+    data-drawer-panel
+    class="absolute inset-y-0 right-0 flex w-full max-w-md translate-x-full flex-col overflow-y-auto bg-dark text-white transition-transform duration-300 ease-out"
+  >
+    <div class="flex h-16 shrink-0 items-center justify-end px-6">
+      <button
+        data-drawer-close
+        aria-label={t("contact.close")}
+        class="transition hover:text-brand-lime"
+      >
+        <svg
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="px-8 pb-12">
+      <h2
+        id="contact-drawer-title"
+        class="text-xl font-normal leading-snug tracking-wide md:text-2xl"
+      >
+        {t("contact.title")}
+      </h2>
+      <ContactForm lang={lang} class="mt-10" />
+    </div>
+  </div>
+</div>
+
+<script>
+  const wire = () => {
+    const drawer = document.getElementById("contact-drawer");
+    if (!drawer) return;
+    const panel = drawer.querySelector<HTMLElement>("[data-drawer-panel]");
+    const backdrop = drawer.querySelector("[data-drawer-backdrop]");
+    const closeBtn = drawer.querySelector<HTMLElement>("[data-drawer-close]");
+    let opener: HTMLElement | null = null;
+
+    const open = (state: boolean) => {
+      drawer.classList.toggle("invisible", !state);
+      drawer.classList.toggle("opacity-0", !state);
+      panel?.classList.toggle("translate-x-full", !state);
+      document.body.style.overflow = state ? "hidden" : "";
+      document
+        .querySelectorAll("[data-contact-open]")
+        .forEach((el) => el.setAttribute("aria-expanded", String(state)));
+      // Foco al panel al abrir; de vuelta al disparador al cerrar.
+      if (state) closeBtn?.focus();
+      else opener?.focus();
+    };
+
+    document.querySelectorAll<HTMLElement>("[data-contact-open]").forEach((el) => {
+      el.setAttribute("aria-controls", "contact-drawer");
+      el.setAttribute("aria-expanded", "false");
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        opener = el;
+        open(true);
+      });
+    });
+
+    closeBtn?.addEventListener("click", () => open(false));
+    backdrop?.addEventListener("click", () => open(false));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !drawer.classList.contains("invisible")) open(false);
+    });
+
+    // Focus-trap: mantener el Tab dentro del panel mientras está abierto.
+    panel?.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab") return;
+      const f = panel.querySelectorAll<HTMLElement>(
+        "a[href], button, input, textarea, select"
+      );
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  };
+  wire();
+  document.addEventListener("astro:after-swap", wire);
+</script>

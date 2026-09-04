@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductHero from './product/ProductHero.astro';
 import ProductBlocks from './product/ProductBlocks.astro';
-import ContactSection from './sections/ContactSection.astro';
 import type { Product } from '../data/types';
 import type { Locale } from '../i18n/ui';
 
@@ -12,5 +11,4 @@ const { product, lang, altPath } = Astro.props;
 <BaseLayout lang={lang} altPath={altPath} title={`${product.name[lang]} · Pullami`}>
   <ProductHero product={product} lang={lang} />
   <ProductBlocks product={product} lang={lang} />
-  <ContactSection lang={lang} />
 </BaseLayout>

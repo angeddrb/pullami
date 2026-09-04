@@ -1,0 +1,37 @@
+---
+import { useTranslations, type Locale } from "../i18n/ui";
+interface Props {
+  lang: Locale;
+  class?: string;
+}
+const { lang, class: klass = "" } = Astro.props;
+const t = useTranslations(lang);
+const inputCls =
+  "w-full border-0 border-b border-white/30 bg-transparent py-2 text-white focus:border-white focus:outline-none";
+---
+
+<!-- Paso 2: backend pendiente (Web3Forms / Formspree / Cloudflare Function) -->
+<form class:list={["space-y-7", klass]} data-pending-backend>
+  <label class="block"
+    ><span class="text-sm text-white/70">{t("form.name")}</span>
+    <input type="text" name="name" required class={inputCls} /></label
+  >
+  <label class="block"
+    ><span class="text-sm text-white/70">{t("form.email")}</span>
+    <input type="email" name="email" required class={inputCls} /></label
+  >
+  <label class="block"
+    ><span class="text-sm text-white/70">{t("form.phone")}</span>
+    <input type="tel" name="phone" class={inputCls} /></label
+  >
+  <label class="block"
+    ><span class="text-sm text-white/70">{t("form.message")}</span>
+    <textarea name="message" rows="3" required class={inputCls}></textarea></label
+  >
+  <button
+    type="submit"
+    class="rounded-full border border-white px-10 py-3 font-light tracking-wide transition hover:bg-white hover:text-dark"
+  >
+    {t("form.send")}
+  </button>
+</form>

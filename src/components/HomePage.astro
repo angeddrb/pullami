@@ -4,7 +4,6 @@ import HeroVideo from './sections/HeroVideo.astro';
 import ProductsGrid from './sections/ProductsGrid.astro';
 import About from './sections/About.astro';
 import QualityControl from './sections/QualityControl.astro';
-import ContactSection from './sections/ContactSection.astro';
 import { useTranslations, type Locale } from '../i18n/ui';
 
 interface Props {
@@ -26,5 +25,4 @@ const t = useTranslations(lang);
   <ProductsGrid lang={lang} />
   <About lang={lang} />
   <QualityControl lang={lang} />
-  <ContactSection lang={lang} />
 </BaseLayout>
